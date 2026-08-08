@@ -1,0 +1,5 @@
+ javac -cp ".;mysql-connector-j-26.7.0\mysql-connector-j-26.7.0.jar" MyBackendServer.java DatabaseConnection.java
+ java -cp ".;mysql-connector-j-26.7.0\mysql-connector-j-26.7.0.jar" MyBackendServer
+
+javac -cp ".;mysql-connector-j-26.7.0\mysql-connector-j-26.7.0.jar" MyBackendServer.java DatabaseConnection.javajava -cp ".;mysql-connector-j-26.7.0\mysql-connector-j-26.7.0.jar" MyBackendServer
+java -cp ".;mysql-connector-j-26.7.0\mysql-connector-j-26.7.0.jar" MyBackendServer
