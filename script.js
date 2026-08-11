@@ -21,14 +21,6 @@ consultBtn.addEventListener("click", function () {
 });
 
 
-
-// // Our Lead Generation Process Button
-// const processBtn = document.getElementById("processBtn");
-
-// processBtn.addEventListener("click", function () {
-//     document.getElementById("process").scrollIntoView({
-//         behavior: "smooth"
-//     });
 // });
 const processBtn = document.getElementById("processBtn");
 processBtn.addEventListener("click", function () {
@@ -84,49 +76,6 @@ steps.forEach(function(step){
     });
 });
 
-//faq
-// const faqItems = document.querySelectorAll(".faq-item");
-// faqItems.forEach(function(item){
-//     item.addEventListener("click", function(){
-//         this.style.backgroundColor = "#eef5ff";
-//         this.style.borderColor = "#3b82f6";
-//     });
-// });
-
-// const faqItems = document.querySelectorAll(".faq-item");
-
-// faqItems.forEach(function(item){
-
-//     item.addEventListener("click", function(){
-
-//         if(this.style.backgroundColor === "rgb(238, 245, 255)"){
-
-//             // wapas normal
-//             this.style.backgroundColor = "#fff";
-//             this.style.borderColor = "#ececec";
-
-//         }
-//         else{
-
-//             // highlight
-//             this.style.backgroundColor = "#eef5ff";
-//             this.style.borderColor = "#3b82f6";
-
-//         }
-
-//     });
-
-// });
-
-// //faq answer
-
-// const faqItems = document.querySelectorAll(".faq-item");
-
-// faqItems.forEach((item) => {
-//     item.addEventListener("click", () => {
-//         item.classList.toggle("active");
-//     });
-// });
 const faqItems = document.querySelectorAll(".faq-item");
 
 faqItems.forEach(function(item){
