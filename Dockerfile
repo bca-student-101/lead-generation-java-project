@@ -1,13 +1,14 @@
-# ऑफिशियल टॉमकैट इमेज जो रेलवे पर 100% काम करती है
+# ऑफिशियल टॉमकैट इमेज
 FROM tomcat:9.0-jdk11-openjdk-slim
 
-# पुरानी डिफॉल्ट एप्लिकेशन्स को डिलीट करना
+# पुराने डिफॉल्ट ऐप्स को डिलीट करना
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-# अपनी .war फाइल को सीधे ROOT.war बनाकर सही जगह पर कॉपी करना
+# अपनी .war फाइल को सीधे ROOT.war बनाना
 COPY ./LeadGenAdmin.war /usr/local/tomcat/webapps/ROOT.war
 
-# टॉमकैट का डिफॉल्ट पोर्ट एक्सपोज करना
-EXPOSE 8080
+# सबसे महत्वपूर्ण लाइन: टॉमकैट की अंदरूनी फाइल में पोर्ट को रेलवे के डायनामिक $PORT से बदलना
+RUN sed -i 's/port="8080"/port="${PORT}"/g' /usr/local/tomcat/conf/server.xml
 
+# सर्वर को रन करना
 CMD ["catalina.sh", "run"]
