@@ -1,13 +1,14 @@
-# ऑफिशियल टॉमकैट इमेज
-FROM tomcat:9.0-jdk11-openjdk-slim
+# Official Tomcat image with Java 17
+FROM tomcat:9.0-jdk17-temurin
 
-# पुराने डिफॉल्ट ऐप्स को डिलीट करना
+# Remove default Tomcat applications
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-# अपनी .war फाइल को सीधे ROOT.war बनाना
+# Copy your WAR file as ROOT.war
 COPY ./LeadGenAdmin.war /usr/local/tomcat/webapps/ROOT.war
 
+# Use Railway's dynamic PORT
+RUN sed -i 's/port="8080"/port="${PORT}"/g' /usr/local/tomcat/conf/server.xml
 
-
-# सर्वर को रन करना
+# Start Tomcat
 CMD ["catalina.sh", "run"]
