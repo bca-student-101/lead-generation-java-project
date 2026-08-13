@@ -1,21 +1,15 @@
-# Step 1: Tomcat Runner डाउनलोड करना
-FROM alpine:latest AS downloader
-RUN apk add --no-cache curl
-WORKDIR /app
-RUN curl -fSL https://maven.org -o webapp-runner.jar
+# ऑफिशियल और रेडीमेड टॉमकैट इमेज का इस्तेमाल करें
+FROM tomcat:9.0-jre11-alpine
 
-# Step 2: Java एनवायरनमेंट (openjdk की जगह नया eclipse-temurin)
-FROM eclipse-temurin:11-jre-alpine
-WORKDIR /app
+# टॉमकैट के पुराने डिफॉल्ट ऐप्स को डिलीट करें
+RUN rm -rf /usr/local/tomcat/webapps/*
 
-# डाउनलोडर से रनर जार को कॉपी करना
-COPY --from=downloader /app/webapp-runner.jar .
+# अपनी .war फाइल को सीधे ROOT.war बनाकर सही जगह पर कॉपी करें
+COPY ./LeadGenAdmin.war /usr/local/tomcat/webapps/ROOT.war
 
-# अपनी .war फाइल को रूट में कॉपी करना
-COPY ./LeadGenAdmin.war ./webapps/ROOT.war
-
-# रेलवे का डायनामिक पोर्ट एक्सपोज करना
+# रेलवे के डायनामिक पोर्ट को बाइंड करने के लिए सबसे ज़रूरी सेटिंग
+ENV PORT=8080
 EXPOSE 8080
 
-# सर्वर रन करने की कमांड
-CMD ["java", "-jar", "webapp-runner.jar", "--port", "8080", "./webapps/ROOT.war"]
+# टॉमकैट को बिना किसी झंझट के डायरेक्ट रन करें
+CMD ["catalina.sh", "run"]
