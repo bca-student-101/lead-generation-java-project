@@ -1,14 +1,11 @@
-FROM tomcat:9.0-jdk11-openjdk-slim
+FROM alpine:latest AS downloader
+RUN apk add --no-cache curl
+WORKDIR /app
+RUN curl -fSL https://maven.org -o webapp-runner.jar
 
-# पुरानी डिफॉल्ट एप्लिकेशन्स को हटाना ताकि कोई कॉन्फ्लिक्ट न हो
-RUN rm -rf /usr/local/tomcat/webapps/*
-
-# अपनी लीड जेन .war फाइल को सीधे ROOT.war की तरह डालना
-COPY ./LeadGenAdmin.war /usr/local/tomcat/webapps/ROOT.war
-
-# रेलवे के डायनामिक पोर्ट को सुनना (यह सबसे महत्वपूर्ण है)
-ENV PORT=8080
+FROM openjdk:11-slim
+WORKDIR /app
+COPY --from=downloader /app/webapp-runner.jar .
+COPY ./LeadGenAdmin.war ./webapps/ROOT.war
 EXPOSE 8080
-
-# टॉमकैट को चालू करने की सही कमांड
-CMD ["catalina.sh", "run"]
+CMD ["java", "-jar", "webapp-runner.jar", "--port", "8080", "./webapps/ROOT.war"]
