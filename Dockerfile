@@ -1,19 +1,13 @@
+# ऑफिशियल टॉमकैट इमेज जो रेलवे पर 100% काम करती है
+FROM tomcat:9.0-jdk11-openjdk-slim
 
-# Step 1: Webapp Runner जार फाइल डाउनलोड करना
-FROM alpine:latest AS downloader
-RUN apk add --no-cache curl
-WORKDIR /app
-RUN curl -fSL https://maven.org -o webapp-runner.jar
+# पुरानी डिफॉल्ट एप्लिकेशन्स को डिलीट करना
+RUN rm -rf /usr/local/tomcat/webapps/*
 
-# Step 2: Java एनवायरनमेंट सेट करना
-FROM eclipse-temurin:11-jre
-WORKDIR /app
+# अपनी .war फाइल को सीधे ROOT.war बनाकर सही जगह पर कॉपी करना
+COPY ./LeadGenAdmin.war /usr/local/tomcat/webapps/ROOT.war
 
-# डाउनलोडर से रनर को कॉपी करना
-COPY --from=downloader /app/webapp-runner.jar .
+# टॉमकैट का डिफॉल्ट पोर्ट एक्सपोज करना
+EXPOSE 8080
 
-# अपनी .war फाइल को सीधे ROOT.war बनाना
-COPY ./LeadGenAdmin.war ./ROOT.war
-
-# रेलवे के डायनामिक पोर्ट को बाइंड करने की सही शेल कमांड (बिना ब्रैकेट के)
-CMD java -jar webapp-runner.jar --port $PORT ./ROOT.war
+CMD ["catalina.sh", "run"]
