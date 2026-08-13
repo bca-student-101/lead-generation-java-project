@@ -26,12 +26,12 @@ public class AdminLoginServlet extends HttpServlet {
         String dbUrl = "jdbc:mysql://altaria.proxy.rlwy.net:26849/railway?useSSL=false&allowPublicKeyRetrieval=true";
         //String dbUrl = "jdbc:mysql://mysql.railway.internal:3306/railway";
         String dbUser = "root"; 
-        String dbPass = "FGRxPAsATZIDZCCVYmZZvPyrAljtiCgt";
+        String dbpass = "FGRxPAsATZIDZCCVYmZZvPyrAljtiCgt";
          
         //connection con =null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-           Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
+           Connection con = DriverManager.getConnection(dbUrl, dbUser, dbpass);
             
             String query = "SELECT * FROM admin_user WHERE username=? AND password=?";
             PreparedStatement ps = con.prepareStatement(query);
