@@ -15,6 +15,12 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/AdminLoginServlet")
 public class AdminLoginServlet extends HttpServlet {
     @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.sendRedirect("admin.html");
+    }
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -24,14 +30,12 @@ public class AdminLoginServlet extends HttpServlet {
         String pass = request.getParameter("password");
         
         String dbUrl = "jdbc:mysql://altaria.proxy.rlwy.net:26849/railway?useSSL=false&allowPublicKeyRetrieval=true";
-        //String dbUrl = "jdbc:mysql://mysql.railway.internal:3306/railway";
         String dbUser = "root"; 
         String dbpass = "FGRxPAsATZIDZCCVYmZZvPyrAljtiCgt";
          
-        //connection con =null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-           Connection con = DriverManager.getConnection(dbUrl, dbUser, dbpass);
+            Connection con = DriverManager.getConnection(dbUrl, dbUser, dbpass);
             
             String query = "SELECT * FROM admin_user WHERE username=? AND password=?";
             PreparedStatement ps = con.prepareStatement(query);
@@ -48,7 +52,7 @@ public class AdminLoginServlet extends HttpServlet {
                 out.println("<script type='text/javascript'>");
                 out.println("alert('गलत यूजरनेम या पासवर्ड!');");
                 out.println("window.location.href='admin.html';");
-                out.println("<script>");
+                out.println("</script>");
             }
             con.close();
         } catch(Exception e) {
